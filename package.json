@@ -1,0 +1,26 @@
+{
+  "name": "twitter_clone",
+  "version": "1.0.0",
+  "description": "test project for twitter clone for backend",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kunarkkhewal/twitter-clone-backend.git"
+  },
+  "author": "Kunark Khewal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kunarkkhewal/twitter-clone-backend/issues"
+  },
+  "homepage": "https://github.com/kunarkkhewal/twitter-clone-backend#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.16"
+  },
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}
