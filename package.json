@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index.js",
+    "migrate-up": "npx knex migrate:latest --knexfile ./db/knexfile.js",
+    "migrate-down": "npx knex migrate:down --knexfile ./db/knexfile.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -21,6 +23,9 @@
     "nodemon": "^2.0.16"
   },
   "dependencies": {
-    "express": "^4.18.1"
+    "express": "^4.18.1",
+    "knex": "^2.1.0",
+    "objection": "^3.0.1",
+    "pg": "^8.7.3"
   }
 }

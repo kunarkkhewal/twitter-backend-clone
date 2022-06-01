@@ -1,4 +1,7 @@
 const express = require('express');
+// const {Model} = require('objection');
+// const knexConfig = require('./db/knexfile');
+// Model.knex(knexConfig.development);
 const app = express();
 const router = express.Router();
 const PORT = process.env.PORT || 8080;
