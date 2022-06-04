@@ -5,7 +5,10 @@ const Tweet = require('../db/models/tweets');
 router.get('/', async (req, res, next) => {
     try {
         const { ids } = req.body;
-        const tweets = await Tweet.query().where('userid', 'in', ids);
+        const tweets = await Tweet.query()
+            .select('tweets.*','user_tweet.id as userid', 'user_tweet.name', 'user_tweet.username')
+            .where('userid', 'in', ids)
+            .joinRelated('user_tweet');
         res.json(tweets);
     } catch (error) {
         res.status(500).json(error)

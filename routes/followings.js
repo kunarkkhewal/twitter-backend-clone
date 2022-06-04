@@ -5,7 +5,10 @@ const Following = require('../db/models/followings');
 router.get('/followers/:userid', async (req, res, next) => {
     try {
         const { userid } = req.params;
-        const followers = await Following.query().where({following: userid});
+        const followers = await Following.query()
+            .where({following: userid})
+            .withGraphFetched('user_follower')
+            .withGraphFetched('user_following');
         res.json(followers);
     } catch (error) {
         res.status(500).json(error)
@@ -17,7 +20,10 @@ router.get('/followers/:userid', async (req, res, next) => {
 router.get('/following/:userid', async (req, res, next) => {
     try {
         const { userid } = req.params;
-        const followers = await Following.query().where({follower: userid});
+        const followers = await Following.query()
+            .where({follower: userid})
+            .withGraphFetched('user_follower')
+            .withGraphFetched('user_following');
         res.json(followers);
     } catch (error) {
         res.status(500).json(error)
