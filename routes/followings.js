@@ -1,46 +1,9 @@
 const router = require('express').Router();
-const Following = require('../db/models/followings');
+const followingController = require('../controllers/followings');
 
-// GET FOLLOWERS
-router.get('/followers/:userid', async (req, res, next) => {
-    try {
-        const { userid } = req.params;
-        const followers = await Following.query()
-            .where({following: userid})
-            .withGraphFetched('user_follower')
-            .withGraphFetched('user_following');
-        res.json(followers);
-    } catch (error) {
-        res.status(500).json(error)
-    }
-    return next();
-});
+router.get('/followers/:userid', followingController.getFollowers);
+router.get('/following/:userid', followingController.getFollowings);
 
-// GET FOLLOWINGS
-router.get('/following/:userid', async (req, res, next) => {
-    try {
-        const { userid } = req.params;
-        const followers = await Following.query()
-            .where({follower: userid})
-            .withGraphFetched('user_follower')
-            .withGraphFetched('user_following');
-        res.json(followers);
-    } catch (error) {
-        res.status(500).json(error)
-    }
-    return next();
-});
-
-// FOLLOW A USER
-router.post('/', async (req, res, next) => {
-    try {
-        const { follower, following } = req.body;
-        const follow = await Following.query().insert({follower, following});
-        res.json(follow);
-    } catch (error) {
-        res.status(500).json(error)
-    }
-    return next();
-});
+router.post('/', followingController.followUser);
 
 module.exports = router;
