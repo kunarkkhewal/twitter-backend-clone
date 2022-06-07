@@ -5,7 +5,17 @@ const User = require('../db/models/users');
 exports.getUserByUsername = async (req, res, next) => {
     try {
         const { username } = req.params;
-        const user = await User.query().findOne({username});
+        const user = await User.query()
+            .select(
+                'users.*', 
+                User.relatedQuery('user_follower')
+                    .count()
+                    .as('followers'),
+                User.relatedQuery('user_following')
+                    .count()
+                    .as('followings'),
+            )
+            .findOne({username})
         res.json(user);
     } catch (error) {
         res.status(500).json(error);

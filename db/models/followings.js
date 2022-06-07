@@ -6,27 +6,26 @@ class Following extends Model {
     }
 
     static get relationMappings() {
-        const User = require('./users');
-
-        return {
-            user_follower: {
-                relation: Model.BelongsToOneRelation,
-                modelClass: User,
-                join: {
-                  from: 'followings.follower',
-                  to: 'users.id'
-                }
-            },
-            user_following: {
-                relation: Model.BelongsToOneRelation,
-                modelClass: User,
-                join: {
-                  from: 'followings.following',
-                  to: 'users.id'
-                }
-            }
-        };
+      const User = require('./users');
+      return {
+          user_follower: {
+              relation: Model.BelongsToOneRelation,
+              modelClass: User,
+              join: {
+                from: 'followings.follower',
+                to: 'users.id'
+              }
+          },
+          user_following: {
+              relation: Model.BelongsToOneRelation,
+              modelClass: User,
+              join: {
+                from: 'followings.following',
+                to: 'users.id'
+              }
+          }
       };
+    };
 }
 
 module.exports = Following;
