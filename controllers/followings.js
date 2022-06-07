@@ -30,6 +30,15 @@ exports.getFollowings = async (req, res, next) => {
     return next();
 };
 
+exports.getUserFollowings = async (userid) => {
+    let followings = await Following.query()
+        .select('following')
+        .where('follower', '=', userid);
+    followings = followings.map(user => user.following);
+    followings.push(Number(userid));
+    return followings;
+}
+
 // FOLLOW A USER
 exports.followUser = async (req, res, next) => {
     try {
