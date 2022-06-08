@@ -8,7 +8,7 @@ class Following extends Model {
     static get relationMappings() {
       const User = require('./users');
       return {
-          user_follower: {
+          user_following: {
               relation: Model.BelongsToOneRelation,
               modelClass: User,
               join: {
@@ -16,7 +16,7 @@ class Following extends Model {
                 to: 'users.id'
               }
           },
-          user_following: {
+          user_follower: {
               relation: Model.BelongsToOneRelation,
               modelClass: User,
               join: {

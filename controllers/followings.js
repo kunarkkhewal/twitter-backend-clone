@@ -50,3 +50,31 @@ exports.followUser = async (req, res, next) => {
     }
     return next();
 };
+
+exports.unfollowUser = async (req, res, next) => {
+    try {
+        const { follower, following } = req.body;
+        const follow = await Following.query()
+            .delete()
+            .where({follower})
+            .where({following});
+        res.json(follow);
+    } catch (error) {
+        res.status(500).json(error)
+    }
+    return next();
+};
+
+exports.isFollowing = async (req, res, next) => {
+    try {
+        const { follower, following } = req.params;
+        const response = await Following.query()
+            .where('follower', '=', follower)
+            .where('following', '=', following)
+        const isFollowing = response.length ? true : false
+        res.json(isFollowing);
+    } catch (error) {
+        res.status(500).json(error);
+    }
+    return next();
+}

@@ -1,4 +1,5 @@
 const User = require('../db/models/users');
+const Following = require('../db/models/followings');
 
 // GET USER INFORMATION
 //BY USERNAME
@@ -48,6 +49,26 @@ exports.ifUsernameExists = async (req, res, next) => {
         res.status(500).json(error);
     }
 }
+
+exports.getNotFollowedUsers = async (req, res, next) => {
+    try {
+        const { id, offset, limit } = req.params;
+        const users = await User.query()
+            .select('users.id', 'users.name', 'users.username')
+            .where('users.id', 'not in', 
+                Following.query()
+                    .select('following')
+                    .where('follower', '=', id)
+            )
+            .where('users.id', '!=', id)
+            .offset(offset)
+            .limit(limit);
+        res.json(users);
+    } catch (error) {
+        res.status(500).json(error);
+    }
+    return next();
+};
 
 // CREATE A NEW USER
 exports.createUser = async (req, res, next) => {
