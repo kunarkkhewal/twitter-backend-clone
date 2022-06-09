@@ -55,7 +55,8 @@ exports.getNotFollowedUsers = async (req, res, next) => {
       )
       .where("users.id", "!=", id)
       .offset(offset)
-      .limit(limit);
+      .limit(limit)
+      .orderBy("users.id", "asc");
     res.json(users);
   } catch (error) {
     res.status(500).json(error);

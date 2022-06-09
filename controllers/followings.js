@@ -40,6 +40,10 @@ exports.getUserFollowings = async (userid) => {
 exports.followUser = async (req, res, next) => {
   try {
     const { follower, following } = req.body;
+    if (follower == following) {
+      res.status(200).json({ message: "Cannot follow yourself" });
+      return next();
+    }
     const follow = await Following.query().insert({ follower, following });
     res.json(follow);
   } catch (error) {
