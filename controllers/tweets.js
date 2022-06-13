@@ -6,13 +6,10 @@ exports.getUserTweets = async (req, res, next) => {
     const { id } = req.params;
     const tweets = await Tweet.query()
       .select(
-        "tweets.*",
-        "user_tweet.id as userid",
-        "user_tweet.name",
-        "user_tweet.username"
+        "tweets.*"
       )
       .where("userid", "=", id)
-      .joinRelated("user_tweet");
+      .withGraphFetched("user(defaultSelects)");
     res.json(tweets);
   } catch (error) {
     res.status(500).json(error);
@@ -26,13 +23,10 @@ exports.getFeedTweets = async (req, res, next) => {
     let followings = await followingController.getUserFollowings(id);
     const tweets = await Tweet.query()
       .select(
-        "tweets.*",
-        "user_tweet.id as userid",
-        "user_tweet.name",
-        "user_tweet.username"
+        "tweets.*"
       )
       .where("userid", "in", followings)
-      .joinRelated("user_tweet");
+      .withGraphFetched("user(defaultSelects)");
     res.json(tweets);
   } catch (error) {
     res.status(500).json(error);

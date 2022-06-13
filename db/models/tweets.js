@@ -8,9 +8,10 @@ class Tweet extends Model {
   static get relationMappings() {
     const User = require("./users");
     return {
-      user_tweet: {
+      user: {
         relation: Model.BelongsToOneRelation,
         modelClass: User,
+        // filter: query => query.select('username', 'name'),
         join: {
           from: "tweets.userid",
           to: "users.id",

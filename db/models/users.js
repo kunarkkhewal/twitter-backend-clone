@@ -26,6 +26,12 @@ class User extends Model {
       },
     };
   }
+
+  static modifiers = {
+    defaultSelects(query) {
+      query.select('name', 'username');
+    }
+  };
 }
 
 module.exports = User;
